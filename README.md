@@ -2,7 +2,7 @@
 ![C++](https://img.shields.io/badge/C++-00599C?style=flat&logo=cplusplus)
 ![Windows](https://img.shields.io/badge/Windows-0078D6?style=flat&logo=windows)
 
-Educational project for learning reverse engineering and Windows memory manipulation.
+🗿Educational project for learning reverse engineering and Windows memory manipulation.🗿
 
 ## How it works
 
@@ -23,13 +23,15 @@ To find a pawn by handle index:
 5. Read entity list and iterate controllers to find enemies
 
 ## Features
-- [x] Entity list reading
-- [x] HP reading
-- [ ] Triggerbot
-- [ ] Radar hack
-- [ ] Glow ESP
-- [ ] RCS
-- [ ] Config system (.ini)
+- 🎯 Triggerbot (Numpad 1) — auto shoots when crosshair is on enemy
+- 🔫 RCS / Recoil Control (Numpad 2) — compensates weapon recoil
+- 💾 Config system (F5 to save) — saves settings to config.ini
 
+## Technical
+- External process memory reading via ReadProcessMemory
+- Generic Read<T>/Write<T> template wrappers
+- Entity list traversal via chunk-based indexing
+- Pattern-independent offset-based memory access
+  
 ## Disclaimer
 For educational purposes only. Reverse engineering research.
