@@ -1,18 +1,23 @@
 #pragma once
 #include <windows.h>
 #include <cstdint>
+#include <map>
+#include <string>
+#include <iostream>
 #include <tlhelp32.h>
 #include <d3d11.h>
 #include "../imgui/imgui.h"
 #include "../imgui/imgui_impl_dx11.h"
 #include "../imgui/imgui_impl_win32.h"
 
+#include <mutex>
+
 // Оффсеты
 namespace offest {
-    constexpr uintptr_t dwEntityList = 0x24AE268;
-    constexpr uintptr_t dwLocalPlayerController = 0x22F3178;
-    constexpr uintptr_t dwLocalPlayerPawn = 0x2068B60;
-    constexpr uintptr_t dwViewAngles = 0x2319648;
+    constexpr uintptr_t dwEntityList = 0x24AF268;
+    constexpr uintptr_t dwLocalPlayerController = 0x22F4188;
+    constexpr uintptr_t dwLocalPlayerPawn = 0x2069B50;
+    constexpr uintptr_t dwViewAngles = 0x231A648;
 
     constexpr uintptr_t m_hPlayerPawn = 0x90C;
 
@@ -39,19 +44,28 @@ extern ID3D11RenderTargetView* pRenderTargetView;
 
 // Структуры
 struct Vector2 { float x, y; };
-
 struct Vector3 { float x, y, z; };
+
+struct Maps { float map_origin_x, map_origin_y; float map_scale; ID3D11ShaderResourceView* texture; };
+extern std::map<std::string, Maps> myMap;
+extern std::string currentMapName;
+
+
+extern Vector2 oldPunch;
+extern INPUT clicks[];
 
 // Данные
 namespace buff {
     extern uintptr_t clientdllbase;
+    extern uintptr_t enginedllbase;
     extern uintptr_t localcontroler;
     extern uintptr_t localPawn;
     extern uintptr_t EntityList;
     extern uintptr_t Controller;
     extern uintptr_t chunk0;
     extern bool glow;
-   // extern bool radar;
+    extern bool radar;    // Добавили
+    extern bool showMenu;
 }
 
 namespace trigger {
@@ -71,8 +85,20 @@ namespace rts {
 // Функции
 void SaveConfig();
 void LoadConfig();
+
 uintptr_t GetModuleBase(DWORD pid, const wchar_t* name);
+
 void ClampAngles(Vector2& angles);
+
+void RunTriggerbot();
+void RunRCS();
+void LoadAllMap();
+
+void DrawEnemies(ImDrawList* DrawList, float cX, float cY, float zoom, float s, float c, float my_px, float my_py, Maps& mapData, uint8_t myTeam);
+
+DWORD WINAPI GlowThread(LPVOID);
+LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp);
+DWORD WINAPI RenderThread(LPVOID);
 
 // Шаблоны
 template <typename T>
