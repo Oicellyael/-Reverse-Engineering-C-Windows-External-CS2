@@ -4,6 +4,8 @@
 
 🗿Educational project for learning reverse engineering and Windows memory manipulation.🗿
 
+https://youtu.be/UrZ4s53YZPU
+
 A high-performance, multi-threaded external application for Counter-Strike 2, demonstrating advanced memory manipulation, real-time data visualization, and engine state tracking.
 
 ## 🛠 Technical Stack
